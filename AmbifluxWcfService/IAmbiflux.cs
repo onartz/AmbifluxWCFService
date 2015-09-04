@@ -55,6 +55,19 @@ namespace AmbifluxWcfService
         ResourceRecord LogSRMA();
 
         [OperationContract]
+        [WebGet(UriTemplate = "json/updateWorkorderRouting/{workorderRoutingNo}/{statusId}/{stateId}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string UpdateWorkorderRouting(string workorderRoutingNo, string statusId, string stateId);
+
+       /* [OperationContract]
+        [WebInvoke(Method = "POST",
+         ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "json/updateWorkorderRouting/{workorderRoutingNo}/{statusId}/{stateId}")]
+        string UpdateWorkorderRouting(string workorderRoutingNo, string statusId, string stateId);*/
+
+        [OperationContract]
+        [WebGet(UriTemplate = "json/updateWorkorder/{workorderId}/{statusId}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string UpdateWorkorder(string workorderId, string statusId);
+
+        [OperationContract]
         [WebGet(UriTemplate = "json/Workorders/{status}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         List<WorkOrderRecord> GetWorkorders(string status);
 
@@ -62,8 +75,6 @@ namespace AmbifluxWcfService
         [WebInvoke(Method = "POST",
          ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "json/NewSRMARequest")]     
         string NewSRMARequest(string phoneNumber, string locationId);
-
-     
 
       
 

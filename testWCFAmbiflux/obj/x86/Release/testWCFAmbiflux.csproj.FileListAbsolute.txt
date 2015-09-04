@@ -4,3 +4,9 @@ C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\testWCF
 C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\testWCFAmbiflux\obj\x86\Release\testWCFAmbiflux.pdb
 C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\testWCFAmbiflux\bin\Release\testWCFAmbiflux.exe.config
 C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\testWCFAmbiflux\obj\x86\Release\testWCFAmbiflux.csprojResolveAssemblyReference.cache
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\bin\Release\testWCFAmbiflux.exe.config
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\bin\Release\testWCFAmbiflux.exe
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\bin\Release\testWCFAmbiflux.pdb
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\obj\x86\Release\testWCFAmbiflux.csprojResolveAssemblyReference.cache
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\obj\x86\Release\testWCFAmbiflux.exe
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\testWCFAmbiflux\obj\x86\Release\testWCFAmbiflux.pdb

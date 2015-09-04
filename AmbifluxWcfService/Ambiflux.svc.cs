@@ -15,28 +15,28 @@ namespace AmbifluxWcfService
     // REMARQUE : vous pouvez utiliser la commande Renommer du menu Refactoriser pour changer le nom de classe "GetEmployees" à la fois dans le code, le fichier svc et le fichier de configuration.
     public class Ambiflux : IAmbiflux
     {
-        //public List<EmployeeRecord> GetAllEmployeesMethod()
-        //{
-        //    List<EmployeeRecord> mylist = new List<EmployeeRecord>();
+        public List<EmployeeRecord> GetAllEmployeesMethod()
+        {
+            List<EmployeeRecord> mylist = new List<EmployeeRecord>();
 
-        //    using (SqlConnection conn = new SqlConnection("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux"))
-        //    {
-        //        conn.Open();
+            using (SqlConnection conn = new SqlConnection("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux"))
+            {
+                conn.Open();
 
-        //        string cmdStr = String.Format("Select firstname,lastname from vEmployee");
-        //        SqlCommand cmd = new SqlCommand(cmdStr, conn);
-        //        SqlDataReader rd = cmd.ExecuteReader();
+                string cmdStr = String.Format("Select firstname,lastname from vEmployee");
+                SqlCommand cmd = new SqlCommand(cmdStr, conn);
+                SqlDataReader rd = cmd.ExecuteReader();
 
-        //        if (rd.HasRows)
-        //        {
-        //            while (rd.Read())
-        //                mylist.Add(new EmployeeRecord(rd.GetString(0), rd.GetString(1)));
-        //        }
-        //        conn.Close();
-        //    }
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                        mylist.Add(new EmployeeRecord(rd.GetString(0), rd.GetString(1)));
+                }
+                conn.Close();
+            }
 
-        //    return mylist;
-        //}
+            return mylist;
+        }
 
    
 
@@ -80,7 +80,6 @@ namespace AmbifluxWcfService
                         firstname = e.FirstName,
                         lastname = e.LastName
 
-
                     }).SingleOrDefault();
 
         }
@@ -105,10 +104,10 @@ namespace AmbifluxWcfService
                                            OrderHeader = new OrderHeaderRecord
                                            {
                                                OrderId = w.OrderHeader.OrderID,
-                                               OrderNo = w.OrderHeader.OrderNo,
-                                               CustomerFirstName = w.OrderHeader.Customer.Contact.FirstName,
-                                               CustomerLastName = w.OrderHeader.Customer.Contact.LastName,
-                                               ObjetDemandeExpress = w.OrderHeader.ObjetDemandeExpress
+                                               OrderNo = w.OrderHeader.OrderNo.TrimEnd(),
+                                               CustomerFirstName = w.OrderHeader.Customer.Contact.FirstName.TrimEnd(),
+                                               CustomerLastName = w.OrderHeader.Customer.Contact.LastName.TrimEnd(),
+                                               ObjetDemandeExpress = w.OrderHeader.ObjetDemandeExpress.TrimEnd()
                                            },
 
 
@@ -142,6 +141,48 @@ namespace AmbifluxWcfService
             //}
             //return l;
 
+        }
+
+        public string UpdateWorkorderRouting(string workorderRoutingNo, string statusId, string stateId) { 
+            DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+            try
+            {
+                var wor = (from w in ctx.WorkOrderRouting where w.WorkOrderRoutingNo == workorderRoutingNo select w).SingleOrDefault();
+                if (wor != null)
+                {
+                    wor.StateID = System.Convert.ToInt16(stateId);
+
+                    wor.WorkOrderRoutingStatusId = System.Convert.ToInt16(statusId);
+                    ctx.SubmitChanges();
+                    return "OK";
+                }
+                return "No record";
+            }
+            catch (Exception e)
+            {
+                return (e.Message);
+            }
+           
+        }
+
+        public string UpdateWorkorder(string workorderId, string statusId)
+        {
+            DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+            try
+            {
+                var wor = (from w in ctx.WorkOrder where w.WorkOrderID == System.Convert.ToInt16(workorderId) select w).SingleOrDefault();
+                if (wor != null)
+                {
+                    wor.WorkOrderStatusID = System.Convert.ToInt16(statusId);
+                    ctx.SubmitChanges();
+                    return "OK";
+                }
+                return "No record";
+            }
+            catch (Exception e)
+            {
+                return (e.Message);
+            }
         }
 
         public ResourceRecord LogSRMA()
