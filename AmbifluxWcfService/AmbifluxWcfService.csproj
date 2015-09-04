@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ambiflux.svc" />
+    <Content Include="Readme.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
