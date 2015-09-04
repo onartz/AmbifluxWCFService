@@ -1,0 +1,8 @@
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\AmbifluxWcfService\bin\AmbifluxWcfService.dll
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\AmbifluxWcfService\bin\AmbifluxWcfService.pdb
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.dll
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.pdb
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.csprojResolveAssemblyReference.cache
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.csprojResolveAssemblyReference.cache
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.dll
+C:\Users\nartz5\Documents\Visual Studio 2010\Projects\ProjetsAIPL\Ambiflux\AmbifluxWcfService\AmbifluxWcfService\obj\Release\AmbifluxWcfService.pdb
