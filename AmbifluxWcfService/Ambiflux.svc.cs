@@ -15,6 +15,107 @@ namespace AmbifluxWcfService
     // REMARQUE : vous pouvez utiliser la commande Renommer du menu Refactoriser pour changer le nom de classe "GetEmployees" à la fois dans le code, le fichier svc et le fichier de configuration.
     public class Ambiflux : IAmbiflux
     {
+
+      public ProductLevelRecord GetProductLevel(string productId)
+      {
+          DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+          /* return (from x in ctx.ProductInventory
+                   where*/
+
+          
+          System.Nullable<long> total =
+               (from x in ctx.ProductInventory
+                where x.ProductID == System.Convert.ToInt32(productId)
+                select (long)x.Quantity
+               )
+               .Sum();
+          return (new ProductLevelRecord(System.Convert.ToInt32(productId), (long)total));
+
+
+      }
+
+      public ProductLevelRecord GetProductLevelByLocation(string productId, string locationId)
+      {
+          DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+          /* return (from x in ctx.ProductInventory
+                   where*/
+
+          System.Nullable<long> total =
+               (from x in ctx.ProductInventory
+                where (x.ProductID == System.Convert.ToInt32(productId)
+                && x.LocationID == System.Convert.ToInt32(locationId))
+                select (long)x.Quantity
+               ).Sum();
+
+
+          return (new ProductLevelRecord(System.Convert.ToInt32(productId), System.Convert.ToInt32(locationId), total.Value));
+
+      }
+
+      public ProductInventoryRecord GetProductInventory(string productId, string locationId)
+      {
+          DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+
+          return (from pi in ctx.ProductInventory
+                  where (pi.LocationID == System.Convert.ToInt32(locationId)
+                  && pi.ProductID == System.Convert.ToInt32(productId))
+                  select new ProductInventoryRecord
+                  {
+                      LocationID = System.Convert.ToInt32(locationId),
+                      ProductID = System.Convert.ToInt32(productId),
+                      Shelf = pi.Shelf,
+                      Quantity = pi.Quantity,
+                      Capacity = pi.Capacity,
+                      DeliverThreshold = System.Convert.ToInt32(pi.DeliverThreshold),
+                      SupplyThreshold = System.Convert.ToInt32(pi.SupplyThreshold)
+                  }).SingleOrDefault();
+
+      }
+
+      public ProductInventoryRecord SetProductInventory(string productId, string locationId, string quantity)
+      {
+          DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+          var productInventory = (from pi in ctx.ProductInventory
+                                  where pi.LocationID == System.Convert.ToInt32(locationId)
+                                  && pi.ProductID == System.Convert.ToInt32(productId)
+                                  select pi).SingleOrDefault();
+          if (productInventory != null)
+          {
+              productInventory.Quantity = System.Convert.ToInt16(quantity);
+              ctx.SubmitChanges();
+          }
+
+          return (from pi in ctx.ProductInventory
+                  where (pi.LocationID == System.Convert.ToInt32(locationId)
+                  && pi.ProductID == System.Convert.ToInt32(productId))
+                  select new ProductInventoryRecord
+                  {
+                      LocationID = System.Convert.ToInt32(locationId),
+                      ProductID = System.Convert.ToInt32(productId),
+                      Shelf = pi.Shelf,
+                      Quantity = pi.Quantity,
+                      Capacity = pi.Capacity,
+                      DeliverThreshold = System.Convert.ToInt32(pi.DeliverThreshold),
+                      SupplyThreshold = System.Convert.ToInt32(pi.SupplyThreshold)
+                  }).SingleOrDefault();
+
+      }
+
+      //public LocationRecord GetLocationById(string locationId)
+      //{
+      //    DataClassesDataContext ctx = new DataClassesDataContext("Data Source=AIP-SQLAIPL;Initial Catalog=Aipl;User ID=ambiflux;Password=ambiflux");
+
+      //    return (from l in ctx.Location
+      //            where l.LocationID == System.Convert.ToInt32(locationId)
+      //            select new LocationRecord
+      //            {
+      //                LocationName = l.Name.TrimEnd(),
+      //                LocationID = System.Convert.ToInt32(locationId)
+
+      //            }).SingleOrDefault();
+      //}
+
+
         public List<EmployeeRecord> GetAllEmployeesMethod()
         {
             List<EmployeeRecord> mylist = new List<EmployeeRecord>();
@@ -110,7 +211,7 @@ namespace AmbifluxWcfService
                                                ObjetDemandeExpress = w.OrderHeader.ObjetDemandeExpress.TrimEnd()
                                            },
 
-
+                                           
                                            WorkorderRoutings = (from wor in w.WorkOrderRouting
                                                                 select new WorkOrderRoutingRecord
                                                                 {
@@ -118,6 +219,7 @@ namespace AmbifluxWcfService
                                                                     Type = System.Convert.ToChar(wor.Type).ToString(),
                                                                     Location = new LocationRecord
                                                                     {
+                                                                      
                                                                         LocationName = wor.Location.Name.TrimEnd()
                                                                     }
                                                                 }).ToList()
@@ -787,6 +889,53 @@ public class LocationRecord
     public string LocationName { get; set; }
     [DataMember]
     public int LocationID { get; set; }
+}
+
+[DataContract]
+public class ProductLevelRecord
+{
+
+
+    [DataMember]
+    public int productId { get; set; }
+    [DataMember]
+    public long quantity { get; set; }
+    [DataMember]
+    public long locationId { get; set; }
+
+    public ProductLevelRecord(int productId, long quantity)
+    {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+    public ProductLevelRecord(int productId, int locationId, long quantity)
+    {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.locationId = locationId;
+    }
+}
+
+[DataContract]
+public
+    class ProductInventoryRecord
+{
+    [DataMember]
+    public int LocationID { get; set; }
+    [DataMember]
+    public int ProductID { get; set; }
+    [DataMember]
+    public string Shelf { get; set; }
+    [DataMember]
+    public int Quantity { get; set; }
+    [DataMember]
+    public int Capacity { get; set; }
+    [DataMember]
+    public int SupplyThreshold { get; set; }
+    [DataMember]
+    public int DeliverThreshold { get; set; }
+
+
 }
 
 

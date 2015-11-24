@@ -20,6 +20,19 @@ namespace AmbifluxWcfService
             UriTemplate = "json/employees")]
         List<EmployeeRecord> GetAllEmployeesMethod();
 
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "json/productLevel/{productId}")]
+        ProductLevelRecord GetProductLevel(string productId);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "json/productLevel/{productId}/{locationId}")]
+        ProductLevelRecord GetProductLevelByLocation(string productId, string locationId);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "json/productInventory/{productId}/{locationId}")]
+        [return: MessageParameter(Name = "ProductInventory")]
+        ProductInventoryRecord GetProductInventory(string productId, string locationId);
+
         //Employee GetEmployeeById(string resourceId);
         [OperationContract]
         [WebGet(UriTemplate = "json/employees/{resourceId}", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
@@ -75,6 +88,11 @@ namespace AmbifluxWcfService
         [WebInvoke(Method = "POST",
          ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest, UriTemplate = "json/NewSRMARequest")]     
         string NewSRMARequest(string phoneNumber, string locationId);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "json/productInventory/{productId}/{locationId}/{quantity}")]
+        [return: MessageParameter(Name = "ProductInventory")]
+        ProductInventoryRecord SetProductInventory(string productId, string locationId, string quantity);
 
       
 
