@@ -61,7 +61,12 @@ namespace AmbifluxWcfService
                   && pi.ProductID == System.Convert.ToInt32(productId))
                   select new ProductInventoryRecord
                   {
-                      LocationID = System.Convert.ToInt32(locationId),
+                      Location = new LocationRecord{
+                          LocationID = pi.Location.LocationID,
+                          LocationName = pi.Location.Name.TrimEnd()
+                      },
+                     //LocationID = System.Convert.ToInt32(locationId),     
+
                       ProductID = System.Convert.ToInt32(productId),
                       Shelf = pi.Shelf,
                       Quantity = pi.Quantity,
@@ -90,7 +95,11 @@ namespace AmbifluxWcfService
                   && pi.ProductID == System.Convert.ToInt32(productId))
                   select new ProductInventoryRecord
                   {
-                      LocationID = System.Convert.ToInt32(locationId),
+                      Location = new LocationRecord
+                      {
+                          LocationID = pi.Location.LocationID,
+                          LocationName = pi.Location.Name.TrimEnd()
+                      },
                       ProductID = System.Convert.ToInt32(productId),
                       Shelf = pi.Shelf,
                       Quantity = pi.Quantity,
@@ -920,10 +929,14 @@ public class ProductLevelRecord
 public
     class ProductInventoryRecord
 {
-    [DataMember]
-    public int LocationID { get; set; }
+    //[DataMember]
+    //public int LocationID { get; set; }
+    //[DataMember]
+    //public string LocationName { get; set; }
     [DataMember]
     public int ProductID { get; set; }
+    [DataMember]
+    public LocationRecord Location { get; set; }
     [DataMember]
     public string Shelf { get; set; }
     [DataMember]
